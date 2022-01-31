@@ -3,13 +3,16 @@ package guru.springframework.sfgdi.config;
 import com.springframework.pets.PetService;
 import com.springframework.pets.PetServiceFactory;
 import guru.springframework.sfgdi.datasource.FakeDataSource;
+import guru.springframework.sfgdi.datasource.SfgConfiguration;
+import guru.springframework.sfgdi.datasource.SfgConstructorConfiguration;
 import guru.springframework.sfgdi.repositories.EnglishGreetingRepository;
 import guru.springframework.sfgdi.repositories.EnglishGreetingRepositoryImpl;
 import guru.springframework.sfgdi.services.*;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.*;
 
-@PropertySource("classpath:datasource.properties")
+@EnableConfigurationProperties(SfgConstructorConfiguration.class)
 @ImportResource("classpath:sfgdi-config.xml")
 @Configuration
 public class GreetingServiceConfig {
@@ -20,13 +23,11 @@ public class GreetingServiceConfig {
     }
 
     @Bean
-    FakeDataSource fakeDataSource(@Value("${guru.username}") String username,
-                                  @Value("${guru.password}") String password,
-                                  @Value("${guru.jdbcurl}") String jdbcurl) {
+    FakeDataSource fakeDataSource(SfgConstructorConfiguration sfgConstructorConfiguration) {
         FakeDataSource fakeDataSource = new FakeDataSource();
-        fakeDataSource.setUsername(username);
-        fakeDataSource.setPassword(password);
-        fakeDataSource.setJdbcurl(jdbcurl);
+        fakeDataSource.setUsername(sfgConstructorConfiguration.getUsername());
+        fakeDataSource.setPassword(sfgConstructorConfiguration.getPassword());
+        fakeDataSource.setJdbcurl(sfgConstructorConfiguration.getJdbcurl());
         return fakeDataSource;
     }
 

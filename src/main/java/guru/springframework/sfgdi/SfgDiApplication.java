@@ -2,6 +2,8 @@ package guru.springframework.sfgdi;
 
 import guru.springframework.sfgdi.controllers.*;
 import guru.springframework.sfgdi.datasource.FakeDataSource;
+import guru.springframework.sfgdi.datasource.SfgConfiguration;
+import guru.springframework.sfgdi.datasource.SfgConstructorConfiguration;
 import guru.springframework.sfgdi.services.PrototypeBean;
 import guru.springframework.sfgdi.services.SingletonBean;
 import org.springframework.boot.SpringApplication;
@@ -53,9 +55,21 @@ public class SfgDiApplication {
 
 		System.out.println("-------- Fake Data Source" );
 		FakeDataSource fakeDataSource = ctx.getBean(FakeDataSource.class);
-		System.out.println("username: " + fakeDataSource.getUsername());
-		System.out.println("password: " + fakeDataSource.getPassword());
-		System.out.println("jdbcurl: " + fakeDataSource.getJdbcurl());
+		System.out.println("username: [" + fakeDataSource.getUsername() + "]");
+		System.out.println("password: [" + fakeDataSource.getPassword() + "]");
+		System.out.println("jdbcurl: [" + fakeDataSource.getJdbcurl() + "]");
+
+		System.out.println("-------- Config Props Bean" );
+		SfgConfiguration sfgConfiguration = ctx.getBean(SfgConfiguration.class);
+		System.out.println("username: [" + sfgConfiguration.getUsername() + "]");
+		System.out.println("password: [" + sfgConfiguration.getPassword() + "]");
+		System.out.println("jdbcurl: [" + sfgConfiguration.getJdbcurl() + "]");
+
+		System.out.println("-------- Constructor Config Props Bean" );
+		SfgConstructorConfiguration sfgConstructorConfiguration = ctx.getBean(SfgConstructorConfiguration.class);
+		System.out.println("username: [" + sfgConstructorConfiguration.getUsername() + "]");
+		System.out.println("password: [" + sfgConstructorConfiguration.getPassword() + "]");
+		System.out.println("jdbcurl: [" + sfgConstructorConfiguration.getJdbcurl() + "]");
 	}
 
 }
